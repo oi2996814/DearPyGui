@@ -14,9 +14,8 @@ on:
 
     paths-ignore:
       - 'docs/**'
-      - 'Resources/**'
-      - 'Scripts/**'
-      - 'Tools/**'
+      - 'assets/**'
+      - 'scripts/**'
 
   pull_request:
 
@@ -32,7 +31,7 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Retrieve submodules
       shell: cmd
@@ -42,7 +41,7 @@ jobs:
       shell: cmd
       run: |
         cd %GITHUB_WORKSPACE%
-        cd Scripts
+        cd scripts
         call BuildPythonForWindows.bat --ci
         
     - name: Build DearPyGui
@@ -55,12 +54,13 @@ jobs:
         cd ..
         cmake --build cmake-build-release --config Release
 
-    - name: Run Tests
-      shell: cmd
-      run: |
-        cd %GITHUB_WORKSPACE%
-        cd cmake-build-release\DearSandbox
-        DearSandbox.exe
+# temporarily removed until github runners are fixed (freetype is causing issues)
+#    - name: Run Tests
+#      shell: cmd
+#      run: |
+#        cd %GITHUB_WORKSPACE%
+#        cd cmake-build-release\DearSandbox
+#        DearSandbox.exe
 
   build-MacOS:
     
@@ -70,7 +70,7 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Retrieve submodules
       run: git submodule update --init --recursive
@@ -78,8 +78,9 @@ jobs:
     - name: Build Python
       run: |
         cd $GITHUB_WORKSPACE
-        cd Dependencies/cpython
+        cd thirdparty/cpython
         mkdir -p build/debug
+        chmod +x configure
         cd build/debug
         ../../configure --with-pydebug --enable-shared --prefix=$(pwd) LDFLAGS=-Wl,-rpath,$(pwd)
         make
@@ -96,7 +97,7 @@ jobs:
 
   build-Ubuntu:
     
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
       CXX: g++-9
     if: ${{! contains(github.event.head_commit.message, '[individual]') || contains(github.event.head_commit.message, '[linux]')}}
@@ -104,7 +105,7 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Retrieve submodules
       run: git submodule update --init --recursive
@@ -113,13 +114,14 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE
         sudo apt-get update 
-        sudo apt-get install libgl1-mesa-dev xorg-dev libfreetype6-dev
+        sudo apt-get install libgl1-mesa-dev xorg-dev
     
     - name: Build Python
       run: |
         cd $GITHUB_WORKSPACE
-        cd Dependencies/cpython
+        cd thirdparty/cpython
         mkdir -p build/debug
+        chmod +x configure
         cd build/debug
         ../../configure --with-pydebug --enable-shared
         make

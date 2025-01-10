@@ -3,7 +3,7 @@ Themes
 
 Themes are containers which are composed of:
     Theme Components:
-        are containers within a theme that can specify an item type the theme colors/styles target
+        containers within a theme that can specify an item type the theme colors/styles target
     Theme Colors:
         items that are added to a theme component and set colors
     Theme Styles:
@@ -13,7 +13,7 @@ The theme can be:
 
 * bound as the default theme. This will have a global effect across all windows and propagate.
 * bound to a container. This will propagate to its children if applicable theme components are in the theme.
-* bound to an item type if applicable theme components are in the theme. a item container, or a specific item.
+* bound to an item type if applicable theme components are in the theme.
 
 Theme components must have a specified item type. This can either be *mvAll* for all items or a specific item type.
 
@@ -34,7 +34,7 @@ Theme colors and styles fall into the following categories:
 Default Theme (global) 
 ----------------------
 
-Default themes will apply the theme globally across all windows and propigate to children.
+Default themes will apply the theme globally across all windows and propagate to children.
 
 .. code-block:: python
 
@@ -120,7 +120,7 @@ Applying a theme to a container will propagate the theme to its children:
 Item Specific
 -------------
 
-Applying a theme to an item will overide any previous themes to that specified item if the theme contains an applicable component.
+Applying a theme to an item will overide any previous themes on the specified item if the theme contains an applicable component.
 
 .. code-block:: python
 
@@ -220,10 +220,10 @@ The theme prioritizes the latest applied theme in the order of
 Theme for Disabled Items
 ------------------------
 
-Each item has a separate disabled themethat is utilized when the item is disabled. 
-The disable theme follows the same propagation rules as the enabled theme.
-When an item's parameter *enabled* is set to *False* the item will utilize it's default theme. 
-If no disable theme has been set the defaule disable theme will be used.
+Each item has a separate disabled theme that is used when the item is disabled.
+The disabled theme follows the same propagation rules as the enabled theme.
+When an item's parameter *enabled* is set to *False* the item will use its disabled theme.
+If no disabled theme has been set the default theme will be used.
 
 .. code-block:: python
 
@@ -297,18 +297,18 @@ mvThemeCol_SliderGrab           mvThemeCol_ModalWindowDimBg
 Plot Colors
 -----------
 
-======================= ====================== ====================
+======================= ====================== =======================
 Plot Colors
-======================= ====================== ====================
-mvPlotCol_Line          mvPlotCol_LegendBg     mvPlotCol_YAxisGrid
-mvPlotCol_Fill          mvPlotCol_LegendBorder mvPlotCol_YAxis2
-mvPlotCol_MarkerOutline mvPlotCol_LegendText   mvPlotCol_YAxisGrid2
-mvPlotCol_MarkerFill    mvPlotCol_TitleText    mvPlotCol_YAxis3
-mvPlotCol_ErrorBar      mvPlotCol_InlayText    mvPlotCol_YAxisGrid3
-mvPlotCol_FrameBg       mvPlotCol_XAxis        mvPlotCol_Selection
-mvPlotCol_PlotBg        mvPlotCol_XAxisGrid    mvPlotCol_Query
-mvPlotCol_PlotBorder    mvPlotCol_YAxis        mvPlotCol_Crosshairs
-======================= ====================== ====================
+======================= ====================== =======================
+mvPlotCol_Line          mvPlotCol_LegendBg     mvPlotCol_AxisBgHovered
+mvPlotCol_Fill          mvPlotCol_LegendBorder mvPlotCol_AxisGrid
+mvPlotCol_MarkerOutline mvPlotCol_LegendText   mvPlotCol_AxisText
+mvPlotCol_MarkerFill    mvPlotCol_TitleText    mvPlotCol_Selection
+mvPlotCol_ErrorBar      mvPlotCol_InlayText    
+mvPlotCol_FrameBg       mvPlotCol_AxisBg       
+mvPlotCol_PlotBg        mvPlotCol_AxisBgActive 
+mvPlotCol_PlotBorder    mvPlotCol_Crosshairs        
+======================= ====================== =======================
 
 Node Colors
 -----------
@@ -327,34 +327,42 @@ mvNodeCol_TitleBarHovered
 Core Styles
 -----------
 
-============================== ==========
-Constant                       Components
-============================== ==========
-mvStyleVar_Alpha               1
-mvStyleVar_WindowPadding       2
-mvStyleVar_WindowRounding      1
-mvStyleVar_WindowBorderSize    1
-mvStyleVar_WindowMinSize       2
-mvStyleVar_WindowTitleAlign    2
-mvStyleVar_ChildRounding       1
-mvStyleVar_ChildBorderSize     1
-mvStyleVar_PopupRounding       1
-mvStyleVar_PopupBorderSize     1
-mvStyleVar_FramePadding        2
-mvStyleVar_FrameRounding       1
-mvStyleVar_FrameBorderSize     1
-mvStyleVar_ItemSpacing         2
-mvStyleVar_ItemInnerSpacing    2
-mvStyleVar_IndentSpacing       1
-mvStyleVar_CellPadding         2
-mvStyleVar_ScrollbarSize       1
-mvStyleVar_ScrollbarRounding   1
-mvStyleVar_GrabMinSize         1
-mvStyleVar_GrabRounding        1
-mvStyleVar_TabRounding         1
-mvStyleVar_ButtonTextAlign     2
-mvStyleVar_SelectableTextAlign 2
-============================== ==========
+======================================= ==========
+Constant                                Components
+======================================= ==========
+mvStyleVar_Alpha                        1
+mvStyleVar_DisabledAlpha                1
+mvStyleVar_WindowPadding                2
+mvStyleVar_WindowRounding               1
+mvStyleVar_WindowBorderSize             1
+mvStyleVar_WindowMinSize                2
+mvStyleVar_WindowTitleAlign             2
+mvStyleVar_ChildRounding                1
+mvStyleVar_ChildBorderSize              1
+mvStyleVar_PopupRounding                1
+mvStyleVar_PopupBorderSize              1
+mvStyleVar_FramePadding                 2
+mvStyleVar_FrameRounding                1
+mvStyleVar_FrameBorderSize              1
+mvStyleVar_ItemSpacing                  2
+mvStyleVar_ItemInnerSpacing             2
+mvStyleVar_IndentSpacing                1
+mvStyleVar_CellPadding                  2
+mvStyleVar_ScrollbarSize                1
+mvStyleVar_ScrollbarRounding            1
+mvStyleVar_GrabMinSize                  1
+mvStyleVar_GrabRounding                 1
+mvStyleVar_TabRounding                  1
+mvStyleVar_TabBorderSize                1
+mvStyleVar_TabBarBorderSize             1
+mvStyleVar_TableAngledHeadersAngle      1
+mvStyleVar_TableAngledHeadersTextAlign  2
+mvStyleVar_ButtonTextAlign              2
+mvStyleVar_SelectableTextAlign          2
+mvStyleVar_SeparatorTextBorderSize      1
+mvStyleVar_SeparatorTextAlign           2
+mvStyleVar_SeparatorTextPadding         2
+======================================= ==========
 
 Plot Styles
 -----------

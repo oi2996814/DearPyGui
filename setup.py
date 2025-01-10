@@ -9,7 +9,7 @@ import sys
 import shutil
 import subprocess
 
-wip_version = "1.1.3"
+wip_version = "2.0.0"
 
 def version_number():
     """This function reads the version number which is populated by github actions"""
@@ -127,12 +127,12 @@ def setup_package():
 
     # copy add items to temporary location
     if os.environ.get('READTHEDOCS') == 'True':
-        shutil.copy(src_path + "/DearPyGui/dearpygui/_dearpygui_RTD.py", src_path + "/output/dearpygui")
+        shutil.copy(src_path + "/dearpygui/_dearpygui_RTD.py", src_path + "/output/dearpygui")
     else:
-        shutil.copy(src_path + "/DearPyGui/dearpygui/dearpygui.py", src_path + "/output/dearpygui")
+        shutil.copy(src_path + "/dearpygui/dearpygui.py", src_path + "/output/dearpygui")
 
-    shutil.copy(src_path + "/DearPyGui/dearpygui/demo.py", src_path + "/output/dearpygui")
-    shutil.copy(src_path + "/DearPyGui/dearpygui/experimental.py", src_path + "/output/dearpygui")
+    shutil.copy(src_path + "/dearpygui/demo.py", src_path + "/output/dearpygui")
+    shutil.copy(src_path + "/dearpygui/experimental.py", src_path + "/output/dearpygui")
 
     with open(src_path + "/output/dearpygui/__init__.py", 'w') as file:
         file.write("__version__='" + version_number() + "'\n")
@@ -141,7 +141,7 @@ def setup_package():
 
         os.rename(src_path + "/output/dearpygui/_dearpygui_RTD.py", src_path + "/output/dearpygui/dearpygui.py")
         with open(src_path + "/output/dearpygui/_dearpygui.py", 'w') as newfile:
-            with open(src_path + "/DearPyGui/dearpygui/_dearpygui.pyi", 'r') as file:
+            with open(src_path + "/dearpygui/_dearpygui.pyi", 'r') as file:
                 lines = file.readlines()
                 for line in lines:
                     if line.__contains__("...") and not line.__contains__("["):
@@ -155,9 +155,9 @@ def setup_package():
     else:
 
         # copy add items to temporary location
-        shutil.copy(src_path + "/DearPyGui/dearpygui/_dearpygui.pyi", src_path + "/output/dearpygui")
+        shutil.copy(src_path + "/dearpygui/_dearpygui.pyi", src_path + "/output/dearpygui")
         if get_platform() == "Windows":
-            shutil.copy(src_path + "/Dependencies/Microsoft/vcruntime140_1.dll", src_path + "/output/dearpygui")
+            shutil.copy(src_path + "/thirdparty/Microsoft/vcruntime140_1.dll", src_path + "/output/dearpygui")
 
     metadata = dict(
         name='dearpygui',                                      # Required
@@ -169,7 +169,7 @@ def setup_package():
         long_description_content_type='text/markdown',         # Optional
         url='https://github.com/hoffstadt/DearPyGui',          # Optional
         license = 'MIT',
-        python_requires='>=3.6',
+        python_requires='>=3.8',
         classifiers=[
                 'Development Status :: 5 - Production/Stable',
                 'Intended Audience :: Education',
@@ -180,11 +180,12 @@ def setup_package():
                 'Operating System :: Microsoft :: Windows :: Windows 10',
                 'Operating System :: POSIX',
                 'Operating System :: Unix',
-                'Programming Language :: Python :: 3.6',
-                'Programming Language :: Python :: 3.7',
                 'Programming Language :: Python :: 3.8',
                 'Programming Language :: Python :: 3.9',
                 'Programming Language :: Python :: 3.10',
+                'Programming Language :: Python :: 3.11',
+                'Programming Language :: Python :: 3.12',
+                'Programming Language :: Python :: 3.13',
                 'Programming Language :: Python :: Implementation :: CPython',
                 'Programming Language :: Python :: 3 :: Only',
                 'Topic :: Software Development :: User Interfaces',

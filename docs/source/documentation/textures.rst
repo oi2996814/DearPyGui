@@ -44,7 +44,7 @@ and any type that supports python's buffer protocol with contiguous data. Below 
         texture_data.append(255 / 255)
 
     with dpg.texture_registry(show=True):
-        dpg.add_static_texture(100, 100, texture_data, tag="texture_tag")
+        dpg.add_static_texture(width=100, height=100, default_value=texture_data, tag="texture_tag")
 
     with dpg.window(label="Tutorial"):
         dpg.add_image("texture_tag")
@@ -55,6 +55,8 @@ and any type that supports python's buffer protocol with contiguous data. Below 
     dpg.show_viewport()
     dpg.start_dearpygui()
     dpg.destroy_context()
+
+The texture can be deleted with `dpg.delete_item("texture_tag")`. However, for the tag/alias to be released items that use `"texture_tag"` (such as a plot series) must also be deleted. 
 
 Dynamic Textures
 ----------------
@@ -80,7 +82,7 @@ safety checks and conversion. Below is a simple example
         texture_data.append(255 / 255)
 
     with dpg.texture_registry(show=True):
-        dpg.add_dynamic_texture(100, 100, texture_data, tag="texture_tag")
+        dpg.add_dynamic_texture(width=100, height=100, default_value=texture_data, tag="texture_tag")
 
 
     def _update_dynamic_textures(sender, app_data, user_data):
@@ -142,7 +144,7 @@ textures every frame. Below is a simple example
     raw_data = array.array('f', texture_data)
 
     with dpg.texture_registry(show=True):
-        dpg.add_raw_texture(100, 100, raw_data, format=dpg.mvFormat_Float_rgba, tag="texture_tag")
+        dpg.add_raw_texture(width=100, height=100, default_value=raw_data, format=dpg.mvFormat_Float_rgba, tag="texture_tag")
 
 
     def update_dynamic_texture(sender, app_data, user_data):
@@ -226,7 +228,7 @@ A simple example can be found below
     width, height, channels, data = dpg.load_image("Somefile.png")
 
     with dpg.texture_registry(show=True):
-        dpg.add_static_texture(width, height, data, tag="texture_tag")
+        dpg.add_static_texture(width=width, height=height, default_value=data, tag="texture_tag")
 
     with dpg.window(label="Tutorial"):
         dpg.add_image("texture_tag")
@@ -238,3 +240,57 @@ A simple example can be found below
     dpg.start_dearpygui()
     dpg.destroy_context()
 
+
+Saving Images
+--------------
+
+**New in 1.4**. DPG provides the function
+:py:func:`save_image <dearpygui.dearpygui.save_image>`
+for saving image data to a file.
+
+The image is a rectangle of pixels stored from left-to-right, top-to-bottom.
+Each pixel contains up to 4 components of data interleaved with 8-bits per
+channel, in the following order: 1=Y, 2=YA, 3=RGB, 4=RGBA. ( Y is monochrome color.)
+
+PNG creates output files with the same number of components as the input.
+The BMP format expands Y to RGB in the file format and does not
+output alpha.
+
+Additional options will will be released with v1.4.1.
+
+The accepted file types include:
+
+    * PNG
+    * JPG (new in v1.4.1)
+    * BMP (new in v1.4.1)
+    * TGA (new in v1.4.1)
+    * HDR (new in v1.4.1)
+
+File type is determined by extension. Must be lowercase (png, jpg, bmp, tga, hdr).
+
+A simple example can be found below
+
+.. code-block:: python
+
+    import dearpygui.dearpygui as dpg
+
+    dpg.create_context()
+    dpg.create_viewport()
+    dpg.setup_dearpygui()
+
+    width, height = 255, 255
+
+    data = []
+    for i in range(width*height):
+        data.append(255)
+        data.append(255)
+        data.append(0)
+
+    with dpg.window(label="Tutorial"):
+        dpg.add_button(label="Save Image", callback=lambda:dpg.save_image(file="newImage.png", width=width, height=height, data=data, components=3))
+
+    dpg.show_viewport()
+    while dpg.is_dearpygui_running():
+        dpg.render_dearpygui_frame()
+
+    dpg.destroy_context()

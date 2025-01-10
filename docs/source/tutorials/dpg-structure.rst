@@ -115,13 +115,13 @@ Item Overview
 DPG can be broken down into **Items**, **UI Items**, **Containers**
 
 Items:
-    Items are anything in the library (i.e. button, registries, windows, ect).
+    Items are anything in the library (i.e. button, registries, windows, etc).
 
 UI Items:
-    Any item in DPG that has a visual component (i.e. button, listbox, window, ect).
+    Any item in DPG that has a visual component (i.e. button, listbox, window, etc).
 
 Containers:
-    Items that can hold other items. (i.e. window, groups, registries, ect).
+    Items that can hold other items. (i.e. window, groups, registries, etc).
 
 The Primary Window
 ------------------
@@ -151,4 +151,4 @@ viewport and always be drawn behind other windows.
     dpg.start_dearpygui()
     dpg.destroy_context()
 
-.. seealso:: for more information on the viewport :doc:`../documentation/primary-window`
+.. seealso:: for more information on the primary window :doc:`../documentation/primary-window`
